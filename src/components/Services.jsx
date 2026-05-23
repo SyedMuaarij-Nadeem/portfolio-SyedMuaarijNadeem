@@ -1,133 +1,165 @@
-import React, { useState, useRef } from 'react';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const servicesData = [
+  {
+    id: 0,
+    icon: "uil-mobile-android",
+    title: "Mobile Development",
+    titleFormatted: <>Mobile <br /> Development</>,
+    modalTitle: "Mobile Development",
+    modalDesc: "I offer mobile development services with expertise in Flutter framework and Firebase backend.",
+    features: [
+      "Cross-platform App Development",
+      "Firebase Integration",
+      "UI/UX Implementation",
+      "State Management Solutions",
+      "API Integration"
+    ]
+  },
+  {
+    id: 1,
+    icon: "uil-arrow",
+    title: "Web Development",
+    titleFormatted: <>Web <br /> Development</>,
+    modalTitle: "Web Development",
+    modalDesc: "I offer web development services with expertise in MERN stack and Firebase.",
+    features: [
+      "Full-stack Web Applications",
+      "Database Design",
+      "API Development",
+      "Responsive Design",
+      "Authentication Systems"
+    ]
+  },
+  {
+    id: 2,
+    icon: "uil-edit",
+    title: "Software Engineering",
+    titleFormatted: <>Software <br /> Engineering</>,
+    modalTitle: "Software Engineering",
+    modalDesc: "I offer software engineering services with expertise in Java and C++.",
+    features: [
+      "Object-Oriented Design",
+      "Data Structures Implementation",
+      "Algorithm Design",
+      "Software Architecture",
+      "Requirement Analysis"
+    ]
+  }
+];
 
 const Services = () => {
-    const [activeModal, setActiveModal] = useState(null);
-    const containerRef = useRef();
+  const [activeId, setActiveId] = useState(null);
 
-    useGSAP(() => {
-        gsap.from('.services-content', {
-            scrollTrigger: {
-                trigger: '.services-container',
-                start: 'top 80%',
-            },
-            y: 30,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.2,
-            ease: 'power3.out'
-        });
-    }, { scope: containerRef });
+  const activeService = servicesData.find(item => item.id === activeId);
 
-    const openModal = (index) => {
-        setActiveModal(index);
-    }
+  // Close drawer on escape key
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setActiveId(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
-    const closeModal = () => {
-        setActiveModal(null);
-    }
+  return (
+    <section className="services section" id="services">
+      <h2 className="section-title" data-heading="Services">What I Offer</h2>
 
-    return (
-        <section className="services section" id="services" ref={containerRef}>
-            <h2 className="section-title" data-heading="Services">What I Offer</h2>
-
-            <div className="services-container container grid">
-                {/* Service 1 */}
-                <ServiceItem
-                    icon="uil-mobile-android"
-                    title={<>Mobile <br /> Development</>}
-                    index={0}
-                    openModal={openModal}
-                    activeModal={activeModal}
-                    closeModal={closeModal}
-                    modalTitle="Mobile Development"
-                    modalDesc="I offer mobile development services with expertise in Flutter framework and Firebase backend."
-                    features={[
-                        "Cross-platform App Development",
-                        "Firebase Integration",
-                        "UI/UX Implementation",
-                        "State Management Solutions",
-                        "API Integration"
-                    ]}
-                />
-
-                {/* Service 2 */}
-                <ServiceItem
-                    icon="uil-arrow"
-                    title={<>Web <br /> Development</>}
-                    index={1}
-                    openModal={openModal}
-                    activeModal={activeModal}
-                    closeModal={closeModal}
-                    modalTitle="Web Development"
-                    modalDesc="I offer web development services with expertise in MERN stack and Firebase."
-                    features={[
-                        "Full-stack Web Applications",
-                        "Database Design",
-                        "API Development",
-                        "Responsive Design",
-                        "Authentication Systems"
-                    ]}
-                />
-
-                {/* Service 3 */}
-                <ServiceItem
-                    icon="uil-edit"
-                    title={<>Software <br /> Engineering</>}
-                    index={2}
-                    openModal={openModal}
-                    activeModal={activeModal}
-                    closeModal={closeModal}
-                    modalTitle="Software Engineering"
-                    modalDesc="I offer software engineering services with expertise in Java and C++."
-                    features={[
-                        "Object-Oriented Design",
-                        "Data Structures Implementation",
-                        "Algorithm Design",
-                        "Software Architecture",
-                        "Requirement Analysis"
-                    ]}
-                />
-            </div>
-        </section>
-    );
-};
-
-const ServiceItem = ({ icon, title, index, openModal, activeModal, closeModal, modalTitle, modalDesc, features }) => {
-    const isActive = activeModal === index;
-
-    return (
-        <div className="services-content">
+      <div className="services-container grid">
+        {servicesData.map((item, index) => (
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay: index * 0.15 }}
+            className="services-content" 
+            key={item.id}
+            onClick={() => setActiveId(item.id)}
+          >
             <div>
-                <i className={`uil ${icon} services-icon`}></i>
-                <h3 className="services-title">{title}</h3>
+              <div className="services-icon-wrap">
+                <i className={`uil ${item.icon} services-icon`}></i>
+              </div>
+              <h3 className="services-title">{item.titleFormatted}</h3>
             </div>
 
-            <span className="services-button" onClick={() => openModal(index)}>
-                View More <i className="uil uil-arrow-right services-button-icon"></i>
+            <span className="services-button">
+              View More <i className="uil uil-arrow-right services-button-icon"></i>
             </span>
+          </motion.div>
+        ))}
+      </div>
 
-            <div className={`services-modal ${isActive ? 'active-modal' : ''}`}>
-                <div className="services-modal-content">
-                    <i className="uil uil-times services-modal-close" onClick={closeModal}></i>
+      {/* Services Full-Screen Slide-in Drawer Portal */}
+      {createPortal(
+        <>
+          <div 
+            className={`services-drawer-overlay ${activeId !== null ? 'open' : ''}`}
+            onClick={() => setActiveId(null)}
+          />
 
-                    <h3 className="services-modal-title">{modalTitle}</h3>
-                    <p className="services-modal-description">{modalDesc}</p>
-
-                    <ul className="services-modal-services grid">
-                        {features.map((feature, i) => (
-                            <li className="services-modal-service" key={i}>
-                                <i className="uil uil-check-circle services-modal-icon"></i>
-                                <p className="services-modal-info">{feature}</p>
-                            </li>
-                        ))}
-                    </ul>
+          <div className={`services-drawer ${activeId !== null ? 'open' : ''}`} data-lenis-prevent>
+            {activeService && (
+              <>
+                <div className="drawer-close" onClick={() => setActiveId(null)}>
+                  <i className="uil uil-times"></i>
                 </div>
-            </div>
-        </div>
-    )
-}
+
+                <div className="drawer-icon-wrap">
+                  <i className={`uil ${activeService.icon} drawer-icon`}></i>
+                </div>
+
+                <span className="drawer-subtitle">Service Offering</span>
+                <h3 className="drawer-title">{activeService.modalTitle}</h3>
+                <p className="drawer-desc">{activeService.modalDesc}</p>
+                
+                <div className="drawer-divider"></div>
+                
+                <h4 className="drawer-features-title">What I Do</h4>
+
+                {/* Framer Motion Staggered Feature List */}
+                <AnimatePresence>
+                  {activeId !== null && (
+                    <motion.ul 
+                      className="drawer-feature-list"
+                      initial="hidden"
+                      animate="visible"
+                      variants={{
+                        hidden: { opacity: 0 },
+                        visible: {
+                          opacity: 1,
+                          transition: { staggerChildren: 0.08, delayChildren: 0.1 }
+                        }
+                      }}
+                    >
+                      {activeService.features.map((feature, i) => (
+                        <motion.li 
+                          className="drawer-feature-item" 
+                          key={i}
+                          variants={{
+                            hidden: { opacity: 0, x: 25 },
+                            visible: { opacity: 1, x: 0, transition: { duration: 0.4, ease: 'easeOut' } }
+                          }}
+                          whileHover={{ x: 5, borderColor: 'rgba(116, 38, 176, 0.4)' }}
+                        >
+                          <i className="uil uil-check-circle drawer-feature-icon"></i>
+                          <span className="drawer-feature-text">{feature}</span>
+                        </motion.li>
+                      ))}
+                    </motion.ul>
+                  )}
+                </AnimatePresence>
+              </>
+            )}
+          </div>
+        </>,
+        document.body
+      )}
+    </section>
+  );
+};
 
 export default Services;

@@ -1,6 +1,7 @@
 import React from 'react';
 
-const Sidebar = ({ isOpen, toggleSidebar, activeSection, theme, toggleTheme }) => {
+const Sidebar = ({ isOpen, toggleSidebar, activeSection }) => {
+
     return (
         <>
             <div className="nav-toggle" id="nav-toggle" onClick={toggleSidebar}>
@@ -10,7 +11,7 @@ const Sidebar = ({ isOpen, toggleSidebar, activeSection, theme, toggleTheme }) =
             <aside className={`sidebar ${isOpen ? 'show-sidebar' : ''}`} id="sidebar">
                 <nav className="nav">
                     <div className="nav-logo">
-                        <a href="#" className="nav-logo-text">M</a>
+                        <img src="/assets/hero-logo.png" className="nav-logo-img" alt="Logo" />
                     </div>
 
                     <div className="nav-menu">
@@ -27,9 +28,7 @@ const Sidebar = ({ isOpen, toggleSidebar, activeSection, theme, toggleTheme }) =
                         </div>
                     </div>
 
-                    <div className="btn-share btn-theme" id="theme-button" onClick={toggleTheme}>
-                        <i className={`uil ${theme === 'dark' ? 'uil-moon' : 'uil-sun'} theme-icon`}></i>
-                    </div>
+
 
                     <div className="nav-close" id="nav-close" onClick={toggleSidebar}>
                         <i className="uil uil-times"></i>
@@ -41,3 +40,4 @@ const Sidebar = ({ isOpen, toggleSidebar, activeSection, theme, toggleTheme }) =
 };
 
 export default Sidebar;
+

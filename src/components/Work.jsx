@@ -1,28 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { workData } from './WorkData';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { motion } from 'framer-motion';
 
 const Work = () => {
     const [filter, setFilter] = useState('all');
-    const [selectedItem, setSelectedItem] = useState(null);
-    const containerRef = useRef();
-
-    useGSAP(() => {
-        gsap.from('.work-card', {
-            scrollTrigger: {
-                trigger: '.work-container',
-                start: 'top 80%',
-            },
-            y: 30,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.1, // Stagger the animation
-            ease: 'power3.out'
-        });
-    }, { dependencies: [filter], scope: containerRef }); // Re-run when filter changes
-
+    const navigate = useNavigate();
     const filteredData = filter === 'all'
         ? workData
         : workData.filter(item => item.category === filter);
@@ -31,16 +14,8 @@ const Work = () => {
         setFilter(category);
     }
 
-    const openPopup = (item) => {
-        setSelectedItem(item);
-    }
-
-    const closePopup = () => {
-        setSelectedItem(null);
-    }
-
     return (
-        <section className="work section" id="work" ref={containerRef}>
+        <section className="work section" id="work">
             <h2 className="section-title" data-heading="My Portfolio">Recent Works</h2>
 
             <div className="work-filters">
@@ -50,57 +25,33 @@ const Work = () => {
                 <span className={`work-item ${filter === 'design' ? 'active-work' : ''}`} onClick={() => handleFilter('design')}>Design</span>
             </div>
 
-            <div className="work-container container grid">
-                {filteredData.map((item) => (
-                    <div className="work-card mix" key={item.id}>
-                        <img src={item.img} alt="" className="work-img" />
+            <div className="work-container">
+                {filteredData.map((item, index) => (
+                    <motion.div
+                        initial={{ opacity: 0, y: 24, scale: 0.96 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                        viewport={{ once: true, margin: '-70px' }}
+                        transition={{ duration: 0.45, delay: index * 0.07, ease: 'easeOut' }}
+                        className="work-card mix"
+                        key={item.id}
+                        onClick={() => navigate(`/project/${item.slug}`)}
+                    >
+                        <img
+                            src={item.img}
+                            alt={item.title}
+                            className="work-img"
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = "https://placehold.co/600x400/1e1e24/ffffff?text=" + encodeURIComponent(item.title);
+                            }}
+                        />
                         <h3 className="work-title">{item.title}</h3>
-                        <span className="work-button" onClick={() => openPopup(item)}>
+                        <span className="work-button">
                             {item.category === 'design' ? 'View Design' : 'Demo'}
                             <i className="uil uil-arrow-right work-button-icon"></i>
                         </span>
-                    </div>
+                    </motion.div>
                 ))}
-            </div>
-
-            {/* Portfolio Popup */}
-            <div className={`portfolio-popup ${selectedItem ? 'open' : ''}`}>
-                <div className="portfolio-popup-inner">
-                    <div className="portfolio-popup-content grid">
-                        <span className="portfolio-popup-close" onClick={closePopup}><i className="uil uil-times"></i></span>
-
-                        {selectedItem && (
-                            <>
-                                <div className="pp-thumbnail">
-                                    <img src={selectedItem.img} alt="" className="portfolio-popup-img" />
-                                </div>
-
-                                <div className="portfolio-popup-info">
-                                    <div className="portfolio-popup-subtitle">Featured - <span>{selectedItem.category}</span></div>
-                                    <div className="portfolio-popup-body">
-                                        <h3 className="details-title">{selectedItem.detailsTitle}</h3>
-                                        <p className="details-description">{selectedItem.detailsDesc}</p>
-
-                                        <ul className="details-info">
-                                            <li>Created - <span>{selectedItem.created}</span></li>
-
-                                            {selectedItem.technologies && (
-                                                <li>Technologies - <span>{selectedItem.technologies}</span></li>
-                                            )}
-
-                                            {selectedItem.tools && (
-                                                <li>Tools - <span>{selectedItem.tools}</span></li>
-                                            )}
-
-                                            <li>Role - <span>{selectedItem.role}</span></li>
-                                            <li>View - <span><a href={selectedItem.link} target="_blank" rel="noopener noreferrer">{selectedItem.link}</a></span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </>
-                        )}
-                    </div>
-                </div>
             </div>
         </section>
     );
