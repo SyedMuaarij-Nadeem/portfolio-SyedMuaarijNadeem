@@ -41,11 +41,11 @@ const servicesData = [
     modalTitle: "Software Engineering",
     modalDesc: "I offer software engineering services with expertise in Java and C++.",
     features: [
-      "Object-Oriented Design",
-      "Data Structures Implementation",
-      "Algorithm Design",
-      "Software Architecture",
-      "Requirement Analysis"
+      "Requirement Engineering",
+      "Software Design & Architecture",
+      "Software Testing",
+      "Software Quality Assurance",
+      "Software Re-Engineering"
     ]
   }
 ];

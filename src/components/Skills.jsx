@@ -46,19 +46,6 @@ const Skills = () => {
                         <i className="uil uil-brackets-curly skills-icon"></i>
                         <div>
                             <h1 className="skills-title">Frontend Development</h1>
-                            <span className="skills-subtitle">1+ year</span>
-                        </div>
-                        <i className="uil uil-angle-down skills-arrow"></i>
-                    </div>
-
-                    {/* Header: Design */}
-                    <div
-                        className={`skills-header ${activeTab === 'design' ? 'skills-active' : ''}`}
-                        onClick={() => setActiveTab('design')}
-                    >
-                        <i className="uil uil-swatchbook skills-icon"></i>
-                        <div>
-                            <h1 className="skills-title">UI / UX Design</h1>
                             <span className="skills-subtitle">2+ years</span>
                         </div>
                         <i className="uil uil-angle-down skills-arrow"></i>
@@ -72,7 +59,20 @@ const Skills = () => {
                         <i className="uil uil-server-network skills-icon"></i>
                         <div>
                             <h1 className="skills-title">Backend Development</h1>
-                            <span className="skills-subtitle">1+ years</span>
+                            <span className="skills-subtitle">2+ years</span>
+                        </div>
+                        <i className="uil uil-angle-down skills-arrow"></i>
+                    </div>
+
+                    {/* Header: Design */}
+                    <div
+                        className={`skills-header ${activeTab === 'design' ? 'skills-active' : ''}`}
+                        onClick={() => setActiveTab('design')}
+                    >
+                        <i className="uil uil-swatchbook skills-icon"></i>
+                        <div>
+                            <h1 className="skills-title">UI / UX Design</h1>
+                            <span className="skills-subtitle">3+ years</span>
                         </div>
                         <i className="uil uil-angle-down skills-arrow"></i>
                     </div>
@@ -82,28 +82,31 @@ const Skills = () => {
                     {/* Content: Frontend */}
                     <div className={`skills-group ${activeTab === 'frontend' ? 'skills-active' : ''}`} data-content id="frontend">
                         <div className="skills-list grid">
+                            <SkillBar name="React.js" percentage="85%" />
+                            <SkillBar name="Next.js" percentage="80%" />
                             <SkillBar name="Flutter" percentage="85%" />
-                            <SkillBar name="MERN" percentage="90%" />
-                            <SkillBar name="HTML/CSS/JS" percentage="90%" />
-                        </div>
-                    </div>
-
-                    {/* Content: Design */}
-                    <div className={`skills-group ${activeTab === 'design' ? 'skills-active' : ''}`} data-content id="design">
-                        <div className="skills-list grid">
-                            <SkillBar name="Figma Designing" percentage="75%" />
-                            <SkillBar name="Wireframing" percentage="80%" />
-                            <SkillBar name="Prototyping" percentage="70%" />
+                            <SkillBar name="Tailwind" percentage="90%" />
+                            <SkillBar name="GSAP" percentage="80%" />
                         </div>
                     </div>
 
                     {/* Content: Backend */}
                     <div className={`skills-group ${activeTab === 'backend' ? 'skills-active' : ''}`} data-content id="backend">
                         <div className="skills-list grid">
+                            <SkillBar name="Node.js" percentage="80%" />
                             <SkillBar name="Firebase" percentage="85%" />
-                            <SkillBar name="Java" percentage="75%" />
-                            <SkillBar name="SQL" percentage="90%" />
-                            <SkillBar name="C++" percentage="75%" />
+                            <SkillBar name="MongoDB" percentage="80%" />
+                            <SkillBar name="Python" percentage="75%" />
+                        </div>
+                    </div>
+
+                    {/* Content: Design */}
+                    <div className={`skills-group ${activeTab === 'design' ? 'skills-active' : ''}`} data-content id="design">
+                        <div className="skills-list grid">
+                            <SkillBar name="Figma Designing" percentage="85%" />
+                            <SkillBar name="Wireframing" percentage="80%" />
+                            <SkillBar name="Prototyping" percentage="75%" />
+                            <SkillBar name="Animations" percentage="80%" />
                         </div>
                     </div>
                 </div>

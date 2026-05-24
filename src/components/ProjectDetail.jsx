@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { workData } from './WorkData';
 import { motion } from 'framer-motion';
@@ -6,11 +6,24 @@ import { motion } from 'framer-motion';
 const ProjectDetail = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const [imageErrors, setImageErrors] = useState({});
+  const [selectedImage, setSelectedImage] = useState(null);
 
-  // Scroll to top on mount
+  // Scroll to top on mount and reset image error states
   useEffect(() => {
+    setImageErrors({});
+    setSelectedImage(null);
     window.scrollTo(0, 0);
   }, [slug]);
+
+  // Close lightbox on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setSelectedImage(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Find project by slug
   const project = workData.find((item) => item.slug === slug);
@@ -54,18 +67,18 @@ const ProjectDetail = () => {
   };
 
   return (
-    <div 
-      className="project-detail-page" 
-      style={{ 
-        '--project-color': project.themeColor, 
+    <div
+      className="project-detail-page"
+      style={{
+        '--project-color': project.themeColor,
         '--project-color-glow': `${project.themeColor}26` // Hex color + 15% opacity (26)
       }}
     >
       <div className="project-detail-hero">
         <div className="container">
           {/* Back Button */}
-          <motion.button 
-            className="project-back-btn" 
+          <motion.button
+            className="project-back-btn"
             onClick={() => navigate('/#work')}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -77,40 +90,40 @@ const ProjectDetail = () => {
 
           <div className="project-detail-grid">
             {/* Left Side: Metadata & Description */}
-            <motion.div 
+            <motion.div
               variants={staggerContainer}
               initial="hidden"
               animate="visible"
             >
-              <motion.span 
+              <motion.span
                 className="project-category-badge"
                 variants={fadeInUp}
               >
                 {getCategoryLabel(project.category)}
               </motion.span>
-              
-              <motion.h1 
+
+              <motion.h1
                 className="project-detail-title"
                 variants={fadeInUp}
               >
                 {project.title}
               </motion.h1>
-              
-              <motion.h3 
+
+              <motion.h3
                 className="project-detail-subtitle"
                 variants={fadeInUp}
               >
                 {project.detailsTitle}
               </motion.h3>
 
-              <motion.p 
+              <motion.p
                 className="project-detail-desc"
                 variants={fadeInUp}
               >
                 {project.detailsDesc}
               </motion.p>
 
-              <motion.div 
+              <motion.div
                 className="project-meta-grid"
                 variants={fadeInUp}
               >
@@ -141,13 +154,13 @@ const ProjectDetail = () => {
                 </div>
               </motion.div>
 
-              <motion.a 
-                href={project.link} 
-                target="_blank" 
+              <motion.a
+                href={project.link}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="project-github-btn"
                 variants={fadeInUp}
-                style={{ 
+                style={{
                   background: `linear-gradient(135deg, ${project.themeColor}, rgba(255,255,255,0.05))`,
                   borderColor: project.themeColor,
                   boxShadow: `0 4px 15px ${project.themeColor}33`
@@ -167,9 +180,9 @@ const ProjectDetail = () => {
               transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
               style={{ display: 'flex', justifyContent: 'center' }}
             >
-              <img 
-                src={project.img} 
-                alt={project.title} 
+              <img
+                src={project.img}
+                alt={project.title}
                 className="project-mockup-img"
                 onError={(e) => {
                   e.target.onerror = null;
@@ -180,35 +193,66 @@ const ProjectDetail = () => {
           </div>
 
           {/* Screenshots Section */}
-          <motion.div 
+          <motion.div
             className="project-screenshots-section"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="project-screenshots-title">Interface Screenshots & Layouts</h2>
+            <h2 className="project-screenshots-title">Interface Screenshots/Design</h2>
             <div className="project-screenshots-grid">
-              {[1, 2, 3].map((num) => (
-                <motion.div 
-                  key={num} 
-                  className="screenshot-placeholder"
-                  whileHover={{ 
-                    scale: 1.02, 
-                    backgroundColor: 'rgba(255, 255, 255, 0.06)',
-                    borderColor: project.themeColor 
-                  }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <i className="uil uil-image-plus"></i>
-                  <span>Screenshot Slot {num}</span>
-                  <span style={{ fontSize: 'var(--smaller-font-size)', opacity: 0.5 }}>Placeholder Box</span>
-                </motion.div>
-              ))}
+              {[1, 2, 3].map((num) => {
+                const imageSrc = `/assets/${project.slug}/${num}.png`;
+                const hasError = imageErrors[num];
+
+                return (
+                  <motion.div
+                    key={num}
+                    className={hasError ? "screenshot-placeholder" : "screenshot-wrapper"}
+                    whileHover={{
+                      scale: 1.02,
+                    }}
+                    transition={{ duration: 0.3 }}
+                    onClick={() => !hasError && setSelectedImage(imageSrc)}
+                  >
+                    {!hasError ? (
+                      <img
+                        src={imageSrc}
+                        alt={`${project.title} Screenshot ${num}`}
+                        className="project-screenshot-img"
+                        onError={() => setImageErrors(prev => ({ ...prev, [num]: true }))}
+                      />
+                    ) : (
+                      <>
+                        <i className="uil uil-image-plus"></i>
+                        <span>Screenshot Slot {num}</span>
+                        <span style={{ fontSize: 'var(--smaller-font-size)', opacity: 0.5 }}>
+                          Missing: assets/{project.slug}/{num}.png
+                        </span>
+                      </>
+                    )}
+                  </motion.div>
+                );
+              })}
             </div>
           </motion.div>
         </div>
       </div>
+
+      {/* Lightbox Modal */}
+      {selectedImage && (
+        <div
+          className="lightbox-modal"
+          onClick={() => setSelectedImage(null)}
+          style={{ '--project-color': project.themeColor }}
+        >
+          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <img src={selectedImage} alt={`${project.title} Screenshot Zoomed`} />
+            <span className="lightbox-close" onClick={() => setSelectedImage(null)}>&times;</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
