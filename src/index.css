@@ -1006,6 +1006,66 @@ input {
     opacity: 1;
 }
 
+/* Star toggle button — bottom-right of each card */
+.work-star-toggle {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background: rgba(11, 7, 24, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.45);
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 0.55rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-star-toggle:hover {
+    background: rgba(11, 7, 24, 0.8);
+    border-color: rgba(255, 215, 0, 0.4);
+    color: #ffd700;
+    transform: scale(1.12);
+}
+
+.work-star-toggle:active {
+    transform: scale(0.92);
+}
+
+/* Filled / starred state */
+.work-star-toggle.is-starred {
+    color: #ffd700;
+    border-color: rgba(255, 215, 0, 0.5);
+    background: rgba(255, 215, 0, 0.12);
+    box-shadow: 0 4px 16px rgba(255, 215, 0, 0.18);
+}
+
+.work-star-toggle.is-starred:hover {
+    background: rgba(255, 215, 0, 0.2);
+    box-shadow: 0 6px 22px rgba(255, 215, 0, 0.3);
+}
+
+.work-star-toggle .star-icon {
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.work-star-toggle.is-starred .star-icon {
+    animation: starPop 0.4s ease forwards;
+}
+
+@keyframes starPop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.35) rotate(18deg); }
+    70%  { transform: scale(0.9) rotate(-6deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
 .work-img {
     border-radius: .75rem;
     margin-bottom: var(--mb1);

@@ -11,7 +11,8 @@ export const workData = [
         created: "Spring 2025",
         technologies: "Flutter, Firebase",
         role: "Full Stack Developer",
-        link: "https://github.com/SyedMuaarij-Nadeem/Echoza"
+        link: "https://github.com/SyedMuaarij-Nadeem/Echoza",
+        starred: true
     },
     {
         id: 2,
@@ -25,7 +26,8 @@ export const workData = [
         created: "Spring 2025",
         technologies: "Node.js, Firebase",
         role: "Full Stack Developer",
-        link: "https://github.com/SyedMuaarij-Nadeem/EaseToCure"
+        link: "https://github.com/SyedMuaarij-Nadeem/EaseToCure",
+        starred: false
     },
     {
         id: 3,
@@ -39,21 +41,23 @@ export const workData = [
         created: "Spring 2026",
         technologies: "React, Three.js, GSAP",
         role: "Full Stack Developer",
-        link: "https://github.com/SyedMuaarij-Nadeem/primalForce"
+        link: "https://github.com/SyedMuaarij-Nadeem/primalForce",
+        starred: false
     },
     {
         id: 4,
         slug: "travellingdiary",
         title: "Travelling Diary",
         category: "app",
-        img: "/assets/travelDia-mockup.png",
+        img: "/assets/travelDia-mockup.jpeg",
         themeColor: "#7B5424",
         detailsTitle: "Travel Planning Application",
         detailsDesc: "A JavaFX GUI-based travel planner using OOP concepts where users can explore cities, find tourist spots, restaurants, and hotels with detailed info, images, and reviews. Great for planning trips interactively.",
         created: "Fall 2023",
         technologies: "Java, JavaFX",
         role: "Developer",
-        link: "https://github.com/SyedMuaarij-Nadeem/TravellingDiary"
+        link: "https://github.com/SyedMuaarij-Nadeem/TravellingDiary",
+        starred: false
     },
     {
         id: 5,
@@ -67,7 +71,8 @@ export const workData = [
         created: "Fall 2024",
         tools: "Figma, Adobe XD",
         role: "UI Designer",
-        link: "https://www.figma.com/design/0T1Wv2y8em9oUfWidJIyGH/EaseToCure?node-id=0-1&p=f&t=jNvq60FDTjHL7OBw-0"
+        link: "https://www.figma.com/design/0T1Wv2y8em9oUfWidJIyGH/EaseToCure?node-id=0-1&p=f&t=jNvq60FDTjHL7OBw-0",
+        starred: false
     },
     {
         id: 6,
@@ -81,22 +86,24 @@ export const workData = [
         created: "Spring 2024",
         technologies: "C++, Data Structures",
         role: "Developer",
-        link: "https://github.com/SyedMuaarij-Nadeem/HarvestHustle"
+        link: "https://github.com/SyedMuaarij-Nadeem/HarvestHustle",
+        starred: false
     },
-    {
-        id: 7,
-        slug: "portfolio-template",
-        title: "Responsive Portfolio Template",
-        category: "web",
-        img: "/assets/portfolio-temp-mockup.png",
-        themeColor: "#7c3aed",
-        detailsTitle: "Mobile & Desktop Portfolio",
-        detailsDesc: "A fully responsive portfolio template built with pure HTML, CSS, and JavaScript. Features mobile-first design, adaptive layouts, CSS animations, and no framework dependencies. Works perfectly on all devices from smartphones to desktop.",
-        created: "Summer 2024",
-        technologies: "HTML5, CSS3, Vanilla JS",
-        role: "Developer",
-        link: "https://github.com/SyedMuaarij-Nadeem/PortfolioTemplate"
-    },
+    // {
+    //     id: 7,
+    //     slug: "portfolio-template",
+    //     title: "Responsive Portfolio Template",
+    //     category: "web",
+    //     img: "/assets/portfolio-temp-mockup.png",
+    //     themeColor: "#7c3aed",
+    //     detailsTitle: "Mobile & Desktop Portfolio",
+    //     detailsDesc: "A fully responsive portfolio template built with pure HTML, CSS, and JavaScript. Features mobile-first design, adaptive layouts, CSS animations, and no framework dependencies. Works perfectly on all devices from smartphones to desktop.",
+    //     created: "Summer 2024",
+    //     technologies: "HTML5, CSS3, Vanilla JS",
+    //     role: "Developer",
+    //     link: "https://github.com/SyedMuaarij-Nadeem/PortfolioTemplate",
+    //     starred: false
+    // },
     {
         id: 8,
         slug: "echoza-ui",
@@ -109,7 +116,8 @@ export const workData = [
         created: "Winter 2024",
         tools: "Figma, Adobe Illustrator",
         role: "UI/UX Designer",
-        link: "https://www.figma.com/design/uLgGksNWTUeAGKQtTAqDDo/Echoza?node-id=0-1&p=f&t=R9WXCvXL1JHI7fAL-0"
+        link: "https://www.figma.com/design/uLgGksNWTUeAGKQtTAqDDo/Echoza?node-id=0-1&p=f&t=R9WXCvXL1JHI7fAL-0",
+        starred: false
     },
     {
         id: 9,
@@ -123,21 +131,23 @@ export const workData = [
         created: "Fall 2024",
         technologies: "SQL, Database Design",
         role: "Database Developer",
-        link: "https://github.com/SyedMuaarij-Nadeem/HMS-Hotel-Management-System"
+        link: "https://github.com/SyedMuaarij-Nadeem/HMS-Hotel-Management-System",
+        starred: false
     },
     {
         id: 10,
         slug: "artisan",
         title: "ARtisan",
         category: "web",
-        img: "/assets/artisan-mockup.png",
+        img: "/assets/artisan-mockup.jpeg",
         themeColor: "#8B5E3C",
         detailsTitle: "AI & WebAR E-Commerce Platform",
         detailsDesc: "A cutting-edge, web-based e-commerce solution addressing the spatial imagination gap. Integrates Generative AI for customized furniture and decor creation with immersive WebAR (Augmented Reality) to allow users to virtually place, scale, and rotate 3D products in their actual environment in real-time before purchase.",
         created: "Spring 2026",
         technologies: "React.js, Three.js, WebXR, GenAI API, Node.js",
         role: "Full Stack & AR Developer",
-        link: "https://github.com/SyedMuaarij-Nadeem/ARtisan"
+        link: "https://github.com/SyedMuaarij-Nadeem/ARtisan",
+        starred: true
     },
     {
         id: 11,
@@ -151,7 +161,8 @@ export const workData = [
         created: "Fall 2025",
         technologies: "Unity 3D, C#, Shader Graph, Post-Processing",
         role: "Game Developer & Level Designer",
-        link: "https://github.com/SyedMuaarij-Nadeem/Valors_Quest"
+        link: "https://github.com/SyedMuaarij-Nadeem/Valors_Quest",
+        starred: false
     },
     {
         id: 12,
@@ -165,7 +176,8 @@ export const workData = [
         created: "Fall 2025",
         technologies: "React.js, Node.js, Express.js, MongoDB",
         role: "Full Stack Developer",
-        link: "https://github.com/SyedMuaarij-Nadeem/Hire_Lawyers"
+        link: "https://github.com/SyedMuaarij-Nadeem/Hire_Lawyers",
+        starred: true
     },
     {
         id: 13,
@@ -179,7 +191,8 @@ export const workData = [
         created: "Spring 2026",
         technologies: "React, Tailwind CSS, Framer Motion, Locomotive Scroll",
         role: "Frontend Developer",
-        link: "https://github.com/SyedMuaarij-Nadeem/ochi-design"
+        link: "https://github.com/SyedMuaarij-Nadeem/ochi-design",
+        starred: false
     },
     {
         id: 14,
@@ -193,6 +206,7 @@ export const workData = [
         created: "Spring 2026",
         tools: "Figma, Adobe XD",
         role: "UI/UX Designer",
-        link: "https://www.figma.com"
+        link: "https://www.figma.com",
+        starred: true
     }
 ];
