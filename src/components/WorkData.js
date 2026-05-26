@@ -206,7 +206,7 @@ export const workData = [
         created: "Spring 2026",
         tools: "Figma, Adobe XD",
         role: "UI/UX Designer",
-        link: "https://www.figma.com",
+        link: "https://www.figma.com/design/R7zgLc08FT28mFu4dhArrG/CMS-HCI-project?node-id=0-1&t=zgK3rDBBgqDkSFr9-1",
         starred: true
     }
 ];
